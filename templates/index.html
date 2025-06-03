@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>SQL Questions</title>
+</head>
+<body>
+    <h1>Select Difficulty</h1>
+    <form method="get" action="/">
+        <select name="difficulty" onchange="this.form.submit()">
+            <option value="Easy" {% if selected_difficulty=='Easy' %}selected{% endif %}>Easy</option>
+            <option value="Medium" {% if selected_difficulty=='Medium' %}selected{% endif %}>Medium</option>
+            <option value="Hard" {% if selected_difficulty=='Hard' %}selected{% endif %}>Hard</option>
+        </select>
+    </form>
+
+    <h2>Questions ({{ selected_difficulty }})</h2>
+    <ul>
+        {% for q in questions %}
+        <pre><h2>{{ q[0] }}</h2></pre>
+        <pre>{{ q[1] }}</pre>
+        <p>################################</p>
+        {% else %}
+        <li>No questions found.</li>
+        {% endfor %}
+    </ul>
+</body>
+</html>

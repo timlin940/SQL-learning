@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>{{ question.title }}</title>
+</head>
+<body>
+    <h1>{{ question.title }} ({{ question.difficulty }})</h1>
+    <pre>{{ question.description }}</pre>
+
+    <h2>Write your SQL here:</h2>
+    <form method="post" action="/submit/{{ question.id }}">
+        <textarea name="sql_code" rows="10" cols="80"></textarea><br>
+        <button type="submit">Run</button>
+    </form>
+
+    <p><a href="/">Back to list</a></p>
+</body>
+</html>
