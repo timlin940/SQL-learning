@@ -52,7 +52,7 @@ def ai_get_hint(question_desc, user_sql):#給AI題目分析
     """
     messages = [
         SystemMessage(content=prompt),
-       HumanMessage(content=f"If student's sql is correct, return Answer is correct ,else provide hints and explanations on how to improve the query, without giving the full answer or code.  ")
+       HumanMessage(content=f"If student's sql is correct, return Answer is correct ,else provide hints and explanations on how to improve the query, without giving the full answer or code.  Please provide hints with line breaks every 80 characters or at logical sentence breaks.")
      ]
     result = llm.invoke(messages)
     response = result.content
@@ -92,4 +92,3 @@ def run_sql(q_id):
 
 if __name__ == '__main__':
     app.run(debug=True)
-    
