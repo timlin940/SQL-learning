@@ -4,7 +4,8 @@
     <title>SQL Questions</title>
 </head>
 <body>
-    <h1>Select Difficulty</h1>
+    <h1>SQL 50問題集</h1>
+    <h2>Select Difficulty</h2>
     <form method="get" action="/">
         <select name="difficulty" onchange="this.form.submit()">
             <option value="Easy" {% if selected_difficulty=='Easy' %}selected{% endif %}>Easy</option>
@@ -16,9 +17,7 @@
     <h2>Questions ({{ selected_difficulty }})</h2>
     <ul>
         {% for q in questions %}
-        <pre><h2>{{ q[0] }}</h2></pre>
-        <pre>{{ q[1] }}</pre>
-        <p>################################</p>
+        <a href="{{ url_for('show_question', q_id=q[0]) }}"><h2>{{ q[1] }}</h2></a>
         {% else %}
         <li>No questions found.</li>
         {% endfor %}

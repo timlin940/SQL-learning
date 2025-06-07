@@ -1,18 +1,28 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>{{ question.title }}</title>
+    <title>{{ descriptions[1] }}</title>
 </head>
 <body>
-    <h1>{{ question.title }} ({{ question.difficulty }})</h1>
-    <pre>{{ question.description }}</pre>
+    <h1>{{ descriptions[1] }}</h1>
+    <pre>{{ descriptions[2] }}</pre>
 
     <h2>Write your SQL here:</h2>
-    <form method="post" action="/submit/{{ question.id }}">
+    <form method="post" action="/question/{{ descriptions[0] }}/run_sql">
         <textarea name="sql_code" rows="10" cols="80"></textarea><br>
-        <button type="submit">Run</button>
+        <button type="submit" name="action" value="run">Run SQL</button>
+       
     </form>
 
+    <div id="result">
+        {% if result %}
+            <h3>Result:</h3>
+            <div style="white-space: pre-wrap;">
+            <pre>{{ result }}</pre>
+            </div>
+        {% endif %}
+    </div>
+</div>
     <p><a href="/">Back to list</a></p>
 </body>
 </html>

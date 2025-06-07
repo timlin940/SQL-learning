@@ -21,18 +21,74 @@ try:
 except : 
     print("資料庫連線錯誤")
 
-#輸入難度，顯示題目(需要留空間給撰寫程式碼和給意見)
-@app.route('/', methods=['GET'])
+#輸入難度，顯示題目 標題(之後會跳轉到題目頁面)
+@app.route('/', methods=['GET'])#首頁
 def index():
     cursor = conn.cursor()
     # 預設難度為 Easy
     difficulty = request.args.get('difficulty', 'Easy')
     # 篩選題目
-    cursor.execute("SELECT title,description FROM question WHERE difficulty = (%s)",(difficulty,))
-    conn.commit()
+    cursor.execute("SELECT id , title, description FROM question WHERE difficulty = (%s)",(difficulty,))
     questions= cursor.fetchall()
 
     return render_template('index.html', questions= questions, selected_difficulty=difficulty)
+
+@app.route('/question/<int:q_id>')#顯示題目和作答區
+def show_question(q_id):
+    cursor = conn.cursor()
+    cursor.execute("SELECT id,title, description FROM question WHERE id = (%s)",(q_id,))
+    result = cursor.fetchone()
+    return render_template('question.html',descriptions = result)
+
+def ai_get_hint(question_desc, user_sql):#給AI題目分析
+    prompt = f"""
+    You are a helpful SQL tutor. The student is working on this question:
+
+    {question_desc}
+
+    The student's current SQL query is:
+
+    {user_sql}
+    """
+    messages = [
+        SystemMessage(content=prompt),
+       HumanMessage(content=f"If student's sql is correct, return Answer is correct ,else provide hints and explanations on how to improve the query, without giving the full answer or code.  ")
+     ]
+    result = llm.invoke(messages)
+    response = result.content
+    
+    return response
+
+    
+@app.route('/question/<int:q_id>/run_sql', methods=['POST'])#執行作答區
+def run_sql(q_id):
+    sql_code = request.form.get('sql_code')
+    action = request.form.get('action')
+
+    cursor = conn.cursor()
+    cursor.execute("SELECT title, description FROM question WHERE id = %s", (q_id,))
+    row = cursor.fetchone()
+    if not row:
+        return "Question not found", 404
+    title, description = row
+
+    if action == 'run':
+        try:
+            ai_hint = ai_get_hint(description, sql_code)
+            result_text = ai_hint
+            return render_template('question.html',
+                                descriptions=[q_id,title, description],
+                               
+                                result=result_text,
+                                )
+        except Exception as e:
+            result_text = f"Error: {str(e)}"
+            return render_template('question.html',
+                                descriptions=[q_id,title, description],
+                               
+                                result=result_text)
+    else:
+        return "Invalid action", 400
 
 if __name__ == '__main__':
     app.run(debug=True)
