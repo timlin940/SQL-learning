@@ -22,5 +22,16 @@
         <li>No questions found.</li>
         {% endfor %}
     </ul>
+
+    <h2>New Questions by Gemini</h2>
+    <form method="post" action="/ai_new_question">
+        <select name="ai_difficulty">
+            <option value="Easy">Easy</option>
+            <option value="Medium" >Medium</option>
+            <option value="Hard">Hard</option>
+        </select>
+        <br>
+        <button type="submit" name="ai_action" value="run">Run</button>
+    </form>
 </body>
 </html>

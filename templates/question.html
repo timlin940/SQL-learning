@@ -1,17 +1,17 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>{{ descriptions[1] }}</title>
+    
 </head>
 <body>
-    <h1>{{ descriptions[1] }}</h1>
-    <pre>{{ descriptions[2] }}</pre>
+    <pre>{{ descriptions[0] }}</pre>
 
     <h2>Write your SQL here:</h2>
-    <form method="post" action="/question/{{ descriptions[0] }}/run_sql">
-        <textarea name="sql_code" rows="10" cols="80"></textarea><br>
-        <button type="submit" name="action" value="run">Run SQL</button>
-       
+    <form method="post" action="/run_sql">
+        <input type="hidden" name="description" value="{{ descriptions[0] }}">
+        <textarea name="sql_code" rows="5" cols="60"></textarea>
+        <br>
+        <button type="submit" name="action" value="run" >Run</button>
     </form>
 
     <div id="result">
