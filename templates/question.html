@@ -14,15 +14,25 @@
         <button type="submit" name="action" value="run" >Run</button>
     </form>
 
-    <div id="result">
-        {% if result %}
+    <div id="correct">
+        {% if hint and correct == "True"%}
             <h3>Result:</h3>
             
-            <pre>{{ result }}</pre>
+            <pre>{{ "Correct" }}</pre>
+            <pre>{{ hint }}</pre>
+           
+        {% endif %}
+    </div>
+        <div id="wrong">
+        {% if hint and wrong == "True"%}
+            <h3>Result:</h3>
+            
+            <pre>{{ "Wrong" }}</pre>
+            <pre>{{ hint }}</pre>
            
         {% endif %}
     </div>
 </div>
-    <p><a href="/">Back to list</a></p>
+    <p><a href="/index">Back to list</a></p>
 </body>
 </html>

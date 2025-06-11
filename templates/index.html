@@ -6,7 +6,7 @@
 <body>
     <h1>SQL 50問題集</h1>
     <h2>Select Difficulty</h2>
-    <form method="get" action="/">
+    <form method="get" action="/index">
         <select name="difficulty" onchange="this.form.submit()">
             <option value="Easy" {% if selected_difficulty=='Easy' %}selected{% endif %}>Easy</option>
             <option value="Medium" {% if selected_difficulty=='Medium' %}selected{% endif %}>Medium</option>

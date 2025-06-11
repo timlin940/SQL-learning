@@ -8,11 +8,23 @@ try:
 except : 
     print("資料庫連線錯誤")
 cursor = conn.cursor()
-difficulty ='Easy'
-    # 篩選題目
-cursor.execute("SELECT title,description FROM question WHERE difficulty = (%s)",(difficulty,))
-conn.commit()
-questions= cursor.fetchall()
-# print(i[0][2])
-for q in questions:
-   print(q[1])
+
+# 新增user
+# cursor.execute("""
+#      CREATE Table users (id SERIAL PRIMARY KEY,
+#                           username VARCHAR(50) NOT NULL UNIQUE,
+#                           email VARCHAR(100) NOT NULL UNIQUE,
+#                           password_hash TEXT NOT NULL,
+#                           created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP)
+#                 """)
+
+# 新增history
+# cursor.execute("""CREATE TABLE history( id SERIAL PRIMARY KEY,
+#                                         user_id INT NOT NULL ,
+#                                         question_id INT, 
+#                                         correct_times INT , 
+#                                         wrong_times INT  )""")
+
+cursor.execute("SELECT * FROM history")
+i = cursor.fetchall()
+print(i)
