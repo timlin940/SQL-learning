@@ -99,7 +99,7 @@ def show_question(q_id):
     cursor.close()
     return render_template('question.html',descriptions = result)
 
-def ai_get_hint(question_desc,  type,user_sql=None ):
+def ai_get_hint(question_desc,type ,last_hint ,user_sql=None ):
     if type == 0:#給AI題目分析
         prompt = f"""
         You are a helpful SQL tutor. The student is working on this question:
@@ -110,6 +110,9 @@ def ai_get_hint(question_desc,  type,user_sql=None ):
 
         {user_sql}
 
+        This is your last hint:
+        {last_hint} .Please learn from your last hint and correctly guide students.
+
         When evaluating, please ignore style differences such as keyword case, whitespace, and punctuation style.
         """
         messages = [
@@ -118,8 +121,8 @@ def ai_get_hint(question_desc,  type,user_sql=None ):
                 Please return the result in JSON format with two fields: "Correct" and "Wrong".
                     Example output:
                     {{
-                    "Correct": "True."
-                    "Wrong":"False"
+                    "Correct": "True.",
+                    "Wrong":"False",
                     "Hint" :"Please provide hints with line breaks every 80 characters or at logical sentence breaks."
                     }}
                 """)]
@@ -163,13 +166,15 @@ def run_sql():
     description = request.form.get('description')
     sql_code = request.form.get('sql_code')
     action = request.form.get('action')
+    last_hint = request.form.get('hint')#拿上次A生的建議，防止AI重複給錯的建議
     cursor = conn.cursor()
     global record_id
     global user_id
     print(record_id)
     print(user_id)
     if action == 'run':
-        ai_hint = ai_get_hint(description, 0,sql_code)#如果type = 0，代表做AI_Hint
+        print(last_hint)
+        ai_hint = ai_get_hint(description, 0,last_hint,sql_code)#如果type = 0，代表做AI_Hint
         ai_hint = re.sub(r"```json|```|=====.*?=====", " ", ai_hint, flags=re.IGNORECASE).strip()#清除干擾json的字元
         data = json.loads(ai_hint)
         correct = data.get("Correct")
@@ -225,7 +230,7 @@ def ai_question():#讓AI生成題目
         cursor.execute("SELECT id,title, description FROM question WHERE id = %s", (q_id,))
         tem = cursor.fetchone()#選出要給AI吃的題目
 
-        ai_question = ai_get_hint(tem, 1,None)
+        ai_question = ai_get_hint(tem, 1,"Not yet give hint.",None)
         ai_question = re.sub(r"```json|```|=====.*?=====", " ", ai_question, flags=re.IGNORECASE).strip()#清除干擾json的字元
         data = json.loads(ai_question)
         description = data.get("description")

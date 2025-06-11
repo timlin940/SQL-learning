@@ -12,27 +12,28 @@
         <textarea name="sql_code" rows="5" cols="60"></textarea>
         <br>
         <button type="submit" name="action" value="run" >Run</button>
-    </form>
 
-    <div id="correct">
-        {% if hint and correct == "True"%}
-            <h3>Result:</h3>
+        <div id="correct">
+            {% if hint and correct == "True"%}
+                <h3>Result:</h3>
+                
+                <pre>{{ "Correct" }}</pre>
+                <pre>{{ hint }}</pre>
+                <input type="hidden" name="hint" value="{{ hint }}">
             
-            <pre>{{ "Correct" }}</pre>
-            <pre>{{ hint }}</pre>
-           
-        {% endif %}
-    </div>
-        <div id="wrong">
-        {% if hint and wrong == "True"%}
-            <h3>Result:</h3>
+            {% endif %}
+        </div>
+            <div id="wrong">
+            {% if hint and wrong == "True"%}
+                <h3>Result:</h3>
+                
+                <pre>{{ "Wrong" }}</pre>
+                <pre>{{ hint }}</pre>
+                <input type="hidden" name="hint" value="{{ hint }}">
             
-            <pre>{{ "Wrong" }}</pre>
-            <pre>{{ hint }}</pre>
-           
-        {% endif %}
-    </div>
-</div>
+            {% endif %}
+        </div>
+    </form>
     <p><a href="/index">Back to list</a></p>
 </body>
 </html>
