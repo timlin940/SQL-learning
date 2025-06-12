@@ -1,37 +1,122 @@
 <!DOCTYPE html>
-<html>
+<html lang="zh-Hant">
 <head>
-    <title>SQL Questions</title>
+    <meta charset="UTF-8" />
+    <title>SQL 50 問題集</title>
+    <style>
+        body {
+            font-family: "微軟正黑體", "Microsoft JhengHei", sans-serif;
+            max-width: 900px;
+            margin: 30px auto;
+            padding: 0 20px;
+            background-color: #f9f9f9;
+            color: #333;
+        }
+        h1, h2 {
+            text-align: center;
+            color: #222;
+        }
+        form {
+            margin: 15px 0 30px 0;
+            text-align: center;
+        }
+        select {
+            padding: 8px 12px;
+            font-size: 16px;
+            border-radius: 6px;
+            border: 1.5px solid #ccc;
+            cursor: pointer;
+            min-width: 140px;
+        }
+        button {
+            padding: 8px 20px;
+            font-size: 16px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            margin-left: 10px;
+            transition: background-color 0.3s;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        ul {
+            list-style: none;
+            padding-left: 0;
+        }
+        ul li {
+            margin-bottom: 12px;
+            padding: 12px 15px;
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 0 8px rgba(0,0,0,0.05);
+            transition: box-shadow 0.3s;
+        }
+        ul li:hover {
+            box-shadow: 0 0 12px rgba(0,0,0,0.15);
+        }
+        ul li a {
+            text-decoration: none;
+            color: #007bff;
+            font-size: 18px;
+            font-weight: 600;
+            display: block;
+        }
+        ul li a:hover {
+            text-decoration: underline;
+        }
+        /* Gemini 新題目區 */
+        #gemini-section {
+            margin-top: 40px;
+            padding: 20px;
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 0 12px rgba(0,0,0,0.05);
+            max-width: 400px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+    </style>
 </head>
 <body>
-    <h1>SQL 50問題集</h1>
-    <h2>Select Difficulty</h2>
-    <form method="get" action="/index">
-        <select name="difficulty" onchange="this.form.submit()">
+
+    <h1>SQL 50 問題集</h1>
+
+    <form method="get" action="/index" aria-label="選擇難度">
+        <label for="difficulty-select" style="font-weight: 600;">選擇難度：</label>
+        <select id="difficulty-select" name="difficulty" onchange="this.form.submit()">
             <option value="Easy" {% if selected_difficulty=='Easy' %}selected{% endif %}>Easy</option>
             <option value="Medium" {% if selected_difficulty=='Medium' %}selected{% endif %}>Medium</option>
             <option value="Hard" {% if selected_difficulty=='Hard' %}selected{% endif %}>Hard</option>
         </select>
     </form>
 
-    <h2>Questions ({{ selected_difficulty }})</h2>
+    <h2>題目列表 ({{ selected_difficulty }})</h2>
     <ul>
         {% for q in questions %}
-        <a href="{{ url_for('show_question', q_id=q[0]) }}"><h2>{{ q[1] }}</h2></a>
+        <li>
+            <a href="{{ url_for('show_question', q_id=q[0]) }}">{{ q[1] }}</a>
+        </li>
         {% else %}
-        <li>No questions found.</li>
+        <li>找不到符合條件的題目。</li>
         {% endfor %}
     </ul>
 
-    <h2>New Questions by Gemini</h2>
-    <form method="post" action="/ai_new_question">
-        <select name="ai_difficulty">
-            <option value="Easy">Easy</option>
-            <option value="Medium" >Medium</option>
-            <option value="Hard">Hard</option>
-        </select>
-        <br>
-        <button type="submit" name="ai_action" value="run">Run</button>
-    </form>
+    <div id="gemini-section" aria-label="Gemini 新題目生成">
+        <h2>Gemini 新題目生成</h2>
+        <form method="post" action="/ai_new_question">
+            <label for="ai_difficulty" style="font-weight: 600;">選擇難度：</label>
+            <select id="ai_difficulty" name="ai_difficulty">
+                <option value="Easy">Easy</option>
+                <option value="Medium">Medium</option>
+                <option value="Hard">Hard</option>
+            </select>
+            <br /><br />
+            <button type="submit" name="ai_action" value="run">生成新題目</button>
+        </form>
+    </div>
+
 </body>
 </html>

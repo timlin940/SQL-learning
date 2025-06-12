@@ -1,31 +1,18 @@
 #這邊撰寫flask專用的route等等
 from flask import Flask, request, render_template
-import psycopg2
-from configparser import ConfigParser
-from langchain_google_genai import ChatGoogleGenerativeAI
 from langchain_core.messages import HumanMessage, SystemMessage
 import numpy as np
 import json
 import re
 
-config = ConfigParser()
-config.read("config.ini")
-llm = ChatGoogleGenerativeAI(
-    model="gemini-1.5-flash-latest",
-    google_api_key=config["Gemini"]["API_KEY"],
-    convert_system_message_to_human=True,
-)
+import connect
+
+conn = connect.postgres()
+llm = connect.gemini()
 
 app = Flask(__name__)
 record_id = None#用來運用答題記錄
 user_id = None
-
-# PostgreSQL 連線設定
-try:
- conn = psycopg2.connect(dbname="SQL_learning", user="postgres", password="Ninomae0520", host="localhost")
-except : 
-    print("資料庫連線錯誤")
-
 
 @app.route('/',methods=['GET'])#登入頁面
 def login_page():
@@ -121,9 +108,10 @@ def ai_get_hint(question_desc,type ,last_hint ,user_sql=None ):
                 Please return the result in JSON format with two fields: "Correct" and "Wrong".
                     Example output:
                     {{
+                    
+                    "Hint" :"Please provide hints with line breaks every 80 characters or at logical sentence breaks.",
                     "Correct": "True.",
-                    "Wrong":"False",
-                    "Hint" :"Please provide hints with line breaks every 80 characters or at logical sentence breaks."
+                    "Wrong":"False"
                     }}
                 """)]
         result = llm.invoke(messages)

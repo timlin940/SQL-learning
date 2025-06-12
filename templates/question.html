@@ -1,39 +1,85 @@
 <!DOCTYPE html>
 <html>
 <head>
-    
+  <meta charset="UTF-8" />
+  <title>SQL Practice</title>
+  <style>
+    body {
+      font-family: "Microsoft JhengHei", sans-serif;
+      max-width: 800px;
+      margin: 30px auto;
+      padding: 0 15px;
+      background-color: #fafafa;
+      color: #333;
+    }
+    pre {
+      background-color: #f0f0f0;
+      padding: 10px;
+      border-radius: 6px;
+      overflow-x: auto;
+      white-space: pre-wrap; /* 保留換行且可換行 */
+      word-break: break-word;
+    }
+    form {
+      margin-top: 20px;
+    }
+    textarea {
+      width: 100%;
+      font-family: Consolas, monospace;
+      font-size: 14px;
+      padding: 10px;
+      border-radius: 6px;
+      border: 1px solid #ccc;
+      resize: vertical;
+      margin-bottom: 15px;
+    }
+    button {
+      padding: 10px 20px;
+      border: none;
+      background-color: #007bff;
+      color: white;
+      border-radius: 6px;
+      font-size: 16px;
+      cursor: pointer;
+    }
+    button:hover {
+      background-color: #0056b3;
+    }
+    .result {
+      margin-top: 20px;
+      padding: 15px;
+      border-radius: 8px;
+      background-color: #e9f7ef;
+      border: 1px solid #a3d3b0;
+    }
+    .result.wrong {
+      background-color: #fbeaea;
+      border-color: #e09b9b;
+    }
+  </style>
 </head>
 <body>
-    <pre>{{ descriptions[0] }}</pre>
 
-    <h2>Write your SQL here:</h2>
-    <form method="post" action="/run_sql">
-        <input type="hidden" name="description" value="{{ descriptions[0] }}">
-        <textarea name="sql_code" rows="5" cols="60"></textarea>
-        <br>
-        <button type="submit" name="action" value="run" >Run</button>
+  <h2>Problem Description</h2>
+  <pre>{{ descriptions[0] }}</pre>
 
-        <div id="correct">
-            {% if hint and correct == "True"%}
-                <h3>Result:</h3>
-                
-                <pre>{{ "Correct" }}</pre>
-                <pre>{{ hint }}</pre>
-                <input type="hidden" name="hint" value="{{ hint }}">
-            
-            {% endif %}
-        </div>
-            <div id="wrong">
-            {% if hint and wrong == "True"%}
-                <h3>Result:</h3>
-                
-                <pre>{{ "Wrong" }}</pre>
-                <pre>{{ hint }}</pre>
-                <input type="hidden" name="hint" value="{{ hint }}">
-            
-            {% endif %}
-        </div>
-    </form>
-    <p><a href="/index">Back to list</a></p>
+  <h2>Write your SQL here:</h2>
+  <form method="post" action="/run_sql">
+    <input type="hidden" name="description" value="{{ descriptions[0] }}">
+    <textarea name="sql_code" rows="7" placeholder="請在這裡輸入你的 SQL 查詢..."></textarea>
+    <br />
+    <button type="submit" name="action" value="run">Run</button>
+  </form>
+
+  {% if hint %}
+    <div class="result {% if wrong == 'True' %}wrong{% endif %}">
+      <h3>Result:</h3>
+      <pre>{{ "Wrong" if wrong == "True" else "Correct" }}</pre>
+      <pre>{{ hint }}</pre>
+    </div>
+  {% endif %}
+
+  <p><a href="/index">Back to list</a></p>
+
 </body>
 </html>

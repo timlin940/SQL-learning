@@ -1,25 +1,87 @@
 <!DOCTYPE html>
 <html lang="zh-Hant">
 <head>
-  <meta charset="UTF-8">
+  <meta charset="UTF-8" />
   <title>註冊</title>
+  <style>
+    body {
+      font-family: "微軟正黑體", "Microsoft JhengHei", sans-serif;
+      background-color: #f5f7fa;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+    }
+    .container {
+      background-color: #fff;
+      padding: 30px 40px;
+      border-radius: 10px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+      width: 350px;
+    }
+    h2#form-title {
+      text-align: center;
+      color: #333;
+      margin-bottom: 25px;
+    }
+    form label {
+      font-weight: 600;
+      display: block;
+      margin-bottom: 6px;
+      color: #555;
+    }
+    input[type="text"],
+    input[type="email"],
+    input[type="password"] {
+      width: 100%;
+      padding: 10px 12px;
+      margin-bottom: 18px;
+      border: 1.5px solid #ccc;
+      border-radius: 6px;
+      font-size: 15px;
+      transition: border-color 0.3s;
+    }
+    input[type="text"]:focus,
+    input[type="email"]:focus,
+    input[type="password"]:focus {
+      border-color: #007bff;
+      outline: none;
+    }
+    input[type="submit"] {
+      width: 100%;
+      background-color: #007bff;
+      color: white;
+      padding: 12px;
+      border: none;
+      border-radius: 6px;
+      font-size: 17px;
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
+    input[type="submit"]:hover {
+      background-color: #0056b3;
+    }
+  </style>
 </head>
 <body>
 
-<h2 id="form-title">註冊</h2>
+  <div class="container">
+    <h2 id="form-title">註冊</h2>
 
-<form id="register-form" action="/register" method="post">
-  <label for="register-username">使用者名稱：</label><br>
-  <input type="text" id="register-username" name="username" required><br><br>
+    <form id="register-form" action="/register" method="post">
+      <label for="register-username">使用者名稱：</label>
+      <input type="text" id="register-username" name="username" required />
 
-  <label for="register-email">Email：</label><br>
-  <input type="email" id="register-email" name="email" required><br><br>
+      <label for="register-email">Email：</label>
+      <input type="email" id="register-email" name="email" required />
 
-  <label for="register-password">密碼：</label><br>
-  <input type="password" id="register-password" name="password" required><br><br>
+      <label for="register-password">密碼：</label>
+      <input type="password" id="register-password" name="password" required />
 
-  <input type="submit" value="註冊" name="register">
-</form>
+      <input type="submit" value="註冊" name="register" />
+    </form>
+  </div>
 
 </body>
 </html>

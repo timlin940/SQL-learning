@@ -3,38 +3,119 @@
 <head>
   <meta charset="UTF-8">
   <title>登入 / 註冊</title>
+  <style>
+    body {
+      font-family: "微軟正黑體", "Microsoft JhengHei", sans-serif;
+      background-color: #f5f7fa;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+    }
+    .container {
+      background-color: white;
+      padding: 30px 40px;
+      border-radius: 10px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+      width: 350px;
+    }
+    h2#form-title {
+      text-align: center;
+      color: #333;
+      margin-bottom: 25px;
+    }
+    form label {
+      font-weight: 600;
+      display: block;
+      margin-bottom: 6px;
+      color: #555;
+    }
+    input[type="text"],
+    input[type="email"],
+    input[type="password"] {
+      width: 100%;
+      padding: 10px 12px;
+      margin-bottom: 18px;
+      border: 1.5px solid #ccc;
+      border-radius: 6px;
+      font-size: 15px;
+      transition: border-color 0.3s;
+    }
+    input[type="text"]:focus,
+    input[type="email"]:focus,
+    input[type="password"]:focus {
+      border-color: #007bff;
+      outline: none;
+    }
+    input[type="submit"] {
+      width: 100%;
+      background-color: #007bff;
+      color: white;
+      padding: 12px;
+      border: none;
+      border-radius: 6px;
+      font-size: 17px;
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
+    input[type="submit"]:hover {
+      background-color: #0056b3;
+    }
+    #error {
+      background-color: #ffe6e6;
+      color: #cc0000;
+      padding: 10px 15px;
+      border-radius: 6px;
+      margin-top: 15px;
+      font-size: 14px;
+      white-space: pre-wrap;
+    }
+    p {
+      text-align: center;
+      margin-top: 20px;
+      color: #555;
+    }
+    p a {
+      color: #007bff;
+      text-decoration: none;
+      font-weight: 600;
+    }
+    p a:hover {
+      text-decoration: underline;
+    }
+  </style>
 </head>
 <body>
 
-<h2 id="form-title">登入</h2>
+  <div class="container">
+    <h2 id="form-title">登入</h2>
 
-<form id="login-form" action="/login" method="post">
-  <label for="login-username">使用者名稱：</label><br>
-  <input type="text" id="login-username" name="username" required><br><br>
+    <form id="login-form" action="/login" method="post">
+      <label for="login-username">使用者名稱：</label>
+      <input type="text" id="login-username" name="username" required>
 
-<label for="login-email">Email：</label><br>
-<input type="email" id="login-email" name="email" required><br><br>
+      <label for="login-email">Email：</label>
+      <input type="email" id="login-email" name="email" required>
 
-  <label for="login-password">密碼：</label><br>
-  <input type="password" id="login-password" name="password" required><br><br>
+      <label for="login-password">密碼：</label>
+      <input type="password" id="login-password" name="password" required>
 
-  <input type="submit" value="登入" name="login">
-</form>
+      <input type="submit" value="登入" name="login">
+    </form>
 
     <div id="error">
-        {% if message %}
-            <h2>message:</h2>
-            
-            <pre>{{ message }}</pre>
-           
-        {% endif %}
+      {% if message %}
+        <h2>訊息：</h2>
+        <pre>{{ message }}</pre>
+      {% endif %}
     </div>
 
-<br>
-<p>
-  <span id="toggle-msg">還沒有帳號？</span>
-   <a href="{{ url_for('register_page') }}"><h2>註冊</h2></a>
-</p>
+    <p>
+      還沒有帳號？
+      <a href="{{ url_for('register_page') }}">註冊</a>
+    </p>
+  </div>
 
 </body>
 </html>
