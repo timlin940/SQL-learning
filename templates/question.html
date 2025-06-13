@@ -69,15 +69,16 @@
     <textarea name="sql_code" rows="7" placeholder="請在這裡輸入你的 SQL 查詢..."></textarea>
     <br />
     <button type="submit" name="action" value="run">Run</button>
-  </form>
 
-  {% if hint %}
-    <div class="result {% if wrong == 'True' %}wrong{% endif %}">
-      <h3>Result:</h3>
-      <pre>{{ "Wrong" if wrong == "True" else "Correct" }}</pre>
-      <pre>{{ hint }}</pre>
-    </div>
-  {% endif %}
+      {% if correct or wrong %}
+        <div class="result {% if wrong == 'True' %}wrong{% endif %}">
+          <h3>Result:</h3>
+          <pre>{{ "Wrong" if wrong == "True" else "Correct" }}</pre>
+          <p>Hint : </p>
+          <pre>{{ hint }}</pre>
+        </div>
+      {% endif %}
+    </form>
 
   <p><a href="/index">Back to list</a></p>
 

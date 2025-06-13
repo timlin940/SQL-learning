@@ -5,7 +5,7 @@ import numpy as np
 import json
 import re
 
-import connect
+import connect#資料庫連線和llm
 
 conn = connect.postgres()
 llm = connect.gemini()
@@ -98,7 +98,7 @@ def ai_get_hint(question_desc,type ,last_hint ,user_sql=None ):
         {user_sql}
 
         This is your last hint:
-        {last_hint} .Please learn from your last hint and correctly guide students.
+        {last_hint} .Please learn from your last hint and correctly guide students if the hint is not None.
 
         When evaluating, please ignore style differences such as keyword case, whitespace, and punctuation style.
         """
