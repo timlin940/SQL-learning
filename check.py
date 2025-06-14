@@ -26,85 +26,62 @@ cursor = conn.cursor()
 #                                         wrong_times INT  )""")
 
 
-# sql = """
-# INSERT INTO question (title, description, difficulty)
-# VALUES (%s, %s, %s)
-# """
+sql = """
+INSERT INTO question (title, description, difficulty)
+VALUES (%s, %s, %s)
+"""
 
-# title = 'Customer Who Visited but Did Not Make Any Transactions'
-# description = """Table: Visits
+title = 'Rising Temperature'
+description = """Table: Weather
 
-# +-------------+---------+
-# | Column Name | Type    |
-# +-------------+---------+
-# | visit_id    | int     |
-# | customer_id | int     |
-# +-------------+---------+
-# visit_id is the column with unique values for this table.
-# This table contains information about the customers who visited the mall.
++---------------+---------+
+| Column Name   | Type    |
++---------------+---------+
+| id            | int     |
+| recordDate    | date    |
+| temperature   | int     |
++---------------+---------+
+id is the column with unique values for this table.
+There are no different rows with the same recordDate.
+This table contains information about the temperature on a certain day.
+ 
 
-# Table: Transactions
+Write a solution to find all dates' id with higher temperatures compared to its previous dates (yesterday).
 
-# +----------------+---------+
-# | Column Name    | Type    |
-# +----------------+---------+
-# | transaction_id | int     |
-# | visit_id       | int     |
-# | amount         | int     |
-# +----------------+---------+
-# transaction_id is column with unique values for this table.
-# This table contains information about the transactions made during the visit_id.
+Return the result table in any order.
 
-# Write a solution to find the IDs of the users who visited without making any transactions and the number of times they made these types of visits.
+The result format is in the following example.
 
-# Return the result table sorted in any order.
+ 
 
-# Example 1:
+Example 1:
 
-# Input: 
-# Visits
-# +----------+-------------+
-# | visit_id | customer_id |
-# +----------+-------------+
-# | 1        | 23          |
-# | 2        | 9           |
-# | 4        | 30          |
-# | 5        | 54          |
-# | 6        | 96          |
-# | 7        | 54          |
-# | 8        | 54          |
-# +----------+-------------+
-# Transactions
-# +----------------+----------+--------+
-# | transaction_id | visit_id | amount |
-# +----------------+----------+--------+
-# | 2              | 5        | 310    |
-# | 3              | 5        | 300    |
-# | 9              | 5        | 200    |
-# | 12             | 1        | 910    |
-# | 13             | 2        | 970    |
-# +----------------+----------+--------+
-# Output: 
-# +-------------+----------------+
-# | customer_id | count_no_trans |
-# +-------------+----------------+
-# | 54          | 2              |
-# | 30          | 1              |
-# | 96          | 1              |
-# +-------------+----------------+
+Input: 
+Weather table:
++----+------------+-------------+
+| id | recordDate | temperature |
++----+------------+-------------+
+| 1  | 2015-01-01 | 10          |
+| 2  | 2015-01-02 | 25          |
+| 3  | 2015-01-03 | 20          |
+| 4  | 2015-01-04 | 30          |
++----+------------+-------------+
+Output: 
++----+
+| id |
++----+
+| 2  |
+| 4  |
++----+
+Explanation: 
+In 2015-01-02, the temperature was higher than the previous day (10 -> 25).
+In 2015-01-04, the temperature was higher than the previous day (20 -> 30).
 
-# Explanation: 
-# Customer with id = 23 visited the mall once and made one transaction during the visit with id = 12.
-# Customer with id = 9 visited the mall once and made one transaction during the visit with id = 13.
-# Customer with id = 30 visited the mall once and did not make any transactions.
-# Customer with id = 54 visited the mall three times. During 2 visits they did not make any transactions, and during one visit they made 3 transactions.
-# Customer with id = 96 visited the mall once and did not make any transactions.
-# As we can see, users with IDs 30 and 96 visited the mall one time without making any transactions. Also, user 54 visited the mall twice and did not make any transactions.
-# """
-# difficulty = 'Easy'
+"""
+difficulty = 'Easy'
 
-# cursor.execute(sql, (title, description, difficulty))
-# conn.commit()
+cursor.execute(sql, (title, description, difficulty))
+conn.commit()
 
 
 
